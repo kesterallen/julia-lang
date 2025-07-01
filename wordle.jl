@@ -63,7 +63,7 @@ function parse_filter_argument(argument::AbstractString)::Vector{FilterRule}
 		letter = m.captures[1][1]
 		numbers_part = m.captures[2]
 
-        # A list of letter location specifications, 
+        # A list of letter location specifications,
         # e.g. "+12-3", "45", "-13", # "12-3", "+23", or "1"
 		locations = [String(num.match) for num in eachmatch(r"[-+]?\d+", numbers_part)]
 
@@ -76,7 +76,7 @@ function parse_filter_argument(argument::AbstractString)::Vector{FilterRule}
                 elseif index == '+'
                     right_spot = true
                 else
-                    int_index = parse(Int, index) 
+                    int_index = parse(Int, index)
                     if int_index < 1 || int_index > WORD_LENGTH
                         throw(DomainError(int_index, "wordle indices must be between 1 and $WORD_LENGTH"))
                     end
