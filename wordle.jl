@@ -52,20 +52,20 @@ function parse_filter_argument(argument::AbstractString)::Vector{FilterRule}
     include_regex = r"(\w)((?:[-+]?\d+)+)"
 
     # ExcludeRules:
-	for m in eachmatch(exclude_regex, argument)
+    for m in eachmatch(exclude_regex, argument)
         filter_rules = mapreduce(c -> ExcludeRule(c), vcat, m.captures[1]; init=filter_rules)
     end
 
-	# IncludeRules: find all letter-number combinations
-	for m in eachmatch(include_regex, argument)
+    # IncludeRules: find all letter-number combinations
+    for m in eachmatch(include_regex, argument)
 
         # Extract initial letter and the position info
-		letter = m.captures[1][1]
-		numbers_part = m.captures[2]
+        letter = m.captures[1][1]
+        numbers_part = m.captures[2]
 
         # A list of letter location specifications,
         # e.g. "+12-3", "45", "-13", # "12-3", "+23", or "1"
-		locations = [String(num.match) for num in eachmatch(r"[-+]?\d+", numbers_part)]
+        locations = [String(num.match) for num in eachmatch(r"[-+]?\d+", numbers_part)]
 
         # The default for right_spot is "+" unless explicity specified otherwise
         right_spot = locations[1] != "-"
@@ -85,7 +85,7 @@ function parse_filter_argument(argument::AbstractString)::Vector{FilterRule}
 
             end
         end
-	end
+    end
     return filter_rules
 end
 
@@ -241,4 +241,3 @@ end
 if abspath(PROGRAM_FILE) == @__FILE__
     main()
 end
-
